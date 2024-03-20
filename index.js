@@ -18,15 +18,22 @@ app.listen(process.env.PORT,()=>{
     console.log("webhook is listening");
 });
 
-app.get('/facebook', function(req, res) {
-  if (
-    req.query['hub.mode'] == 'subscribe' &&
-    req.query['hub.verify_token'] == token
-  ) {
-    res.send(req.query['hub.challenge']);
-  } else {
-    res.sendStatus(400);
-  }
+app.get('/whatsapp', function(req, res) {
+
+    let mode=req.query["hub.mode"];
+    let challange=req.query["hub.challenge"];
+    let token=req.query["hub.verify_token"];
+    
+      if(mode && token){
+
+        if(mode==="subscribe" && token===mytoken){
+            res.status(200).send(challange);
+        }else{
+            res.status(403);
+        }
+
+    }
+
 });
 
 //to verify the callback url from dashboard side - cloud api side
