@@ -2,13 +2,13 @@ var express = require("express");
 var body_parser = require("body-parser");
 var axios = require("axios");
 var app = express();
-var xhub = require('express-x-hub');
+//var xhub = require('express-x-hub');
 require('dotenv').config();
 
 app.set('port', (process.env.PORT || 5000));
 app.listen(app.get('port'));
 
-app.use(xhub({ algorithm: 'sha1', secret: process.env.APP_SECRET }));
+//app.use(xhub({ algorithm: 'sha1', secret: process.env.APP_SECRET }));
 app.use(bodyParser.json());
 
 const token=process.env.TOKEN;
