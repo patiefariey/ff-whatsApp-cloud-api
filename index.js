@@ -1,15 +1,32 @@
-const express=require("express");
-const body_parser=require("body-parser");
-const axios=require("axios");
+var express = require("express");
+var body_parser = require("body-parser");
+var axios = require("axios");
+var app = express();
+var xhub = require('express-x-hub');
 require('dotenv').config();
 
-const app=express().use(body_parser.json());
+app.set('port', (process.env.PORT || 5000));
+app.listen(app.get('port'));
+
+app.use(xhub({ algorithm: 'sha1', secret: process.env.APP_SECRET }));
+app.use(bodyParser.json());
 
 const token=process.env.TOKEN;
 const mytoken=process.env.MYTOKEN;//prasath_token
 
 app.listen(process.env.PORT,()=>{
     console.log("webhook is listening");
+});
+
+app.get('/facebook', function(req, res) {
+  if (
+    req.query['hub.mode'] == 'subscribe' &&
+    req.query['hub.verify_token'] == token
+  ) {
+    res.send(req.query['hub.challenge']);
+  } else {
+    res.sendStatus(400);
+  }
 });
 
 //to verify the callback url from dashboard side - cloud api side
