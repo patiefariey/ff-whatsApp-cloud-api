@@ -9,7 +9,7 @@ app.set('port', (process.env.PORT || 5000));
 app.listen(app.get('port'));
 
 //app.use(xhub({ algorithm: 'sha1', secret: process.env.APP_SECRET }));
-app.use(bodyParser.json());
+app.use(body_parser.json());
 
 const token=process.env.TOKEN;
 const mytoken=process.env.MYTOKEN;//prasath_token
